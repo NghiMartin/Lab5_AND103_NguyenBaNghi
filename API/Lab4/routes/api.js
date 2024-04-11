@@ -4,6 +4,40 @@ var router = express.Router();
 //them model
 const Distributors = require('../models/distributors');
 const Fruits = require('../models/fruits');
+const Orders = require('../models/order');
+
+router.post('/add-order', async (req,res) => {
+    try {
+        const data = req.body; // get data from body
+        console.log(data.order_code);
+        const newOder = new Orders({
+            order_code: data.order_code,
+            id_user: data.id_user
+        });
+        
+        const result = await newOder.save(); // add into data
+        if(result)
+        {
+            res.json({
+                "status" : 200,
+                "message" : "Add successful",
+                "data": result
+            })
+        }
+        else 
+        {
+            res.json({
+                "status" : 400,
+                "message" : "Error, Add fail",
+                "data": []
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 router.post('/add-distributor', async (req,res) => {
     try {

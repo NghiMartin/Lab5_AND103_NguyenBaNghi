@@ -7,7 +7,6 @@ router.get('/test', function(req, res, next) {
 });
 
 //add data
-
 router.post('/mulUpload', upload.array('images',5) , async(req,res) =>{
     try {
     const {files} = req

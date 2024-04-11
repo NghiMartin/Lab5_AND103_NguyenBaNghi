@@ -2,7 +2,9 @@ package com.example.lab5_and103.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Distributor {
+import java.io.Serializable;
+
+public class Distributor implements Serializable {
     @SerializedName("_id")
     private String id;
     private String name , createdAt, updatedAt;

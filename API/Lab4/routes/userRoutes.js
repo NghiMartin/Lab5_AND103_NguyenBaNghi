@@ -1,9 +1,16 @@
 var express = require("express");
 const modelUser = require("../models/users");
+const upload = require('../config/common/upload');
+
 var router = express.Router();
-router.post("/add", async (req, res) => {
+router.post("/add",
+upload.single("avatar"),
+async (req, res) => {
   try {
+    const { file } = req;
+    const urlAvatar = `${req.protocol}://${req.get("host")}/uploads/${file.filename}`;
     const model = new modelUser(req.body);
+    model.avatar = urlAvatar;
     const result = await model.save(); //thêm vào database
     if (result) {
       res.json({

@@ -23,7 +23,34 @@ router.post('/add', async(req,res) =>{
         console.log('Error:'+error);
     }
 })
+const JWT = require("jsonwebtoken");
+const SECRETKEY = "FPTPOLYTECHNIC";
 
+// Api get list fruits
+router.get('/get-list-fruit', async (req, res,next) => {
+
+    const authHeader = req.headers[ 'authorization' ];
+    // Authorization thêm key word  `Bearer token`
+    const token = authHeader && authHeader.split(' ')[1] 
+    if(token == null) return res.sendStatus(401);
+    let payload;
+    JWT.verify(token,SECRETKEY, (err, _payload) => {
+        if(err instanceof JWT.TokenExpiredError) return res.sendStatus(401)
+        if(err) return res.sendStatus(403)
+        payload = _payload;
+    } )
+    console.log(payload);
+    try {
+        const data = await Fruits.find().populate('id_distributor');
+        res.json({
+            "status": 200,
+            "messenger": "Danh sach fruit",
+            "data": data
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
 router.get('/list', async(req,res)=>{
     const result = await modelDistributor.find().sort({createdAt: -1});
     try {

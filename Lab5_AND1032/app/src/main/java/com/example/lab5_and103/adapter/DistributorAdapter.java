@@ -12,8 +12,6 @@ import com.example.lab5_and103.databinding.ItemDistributorBinding;
 import com.example.lab5_and103.model.Distributor;
 
 import java.util.ArrayList;
-import com.example.lab5_and103.MainActivity;
-import com.example.lab5_and103.model.Distributor;
 
 public class DistributorAdapter extends RecyclerView.Adapter<DistributorAdapter.ViewHolder> {
     private ArrayList<Distributor> list;
